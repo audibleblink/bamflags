@@ -37,3 +37,20 @@ func Significance(column int) int {
 	out := math.Exp2(num - 1)
 	return int(out)
 }
+
+// Contains will tell the caller whether or not a certain flag
+// within the provided Binary Access Map is set
+func Contains(binMap, bitValue int64) (isSet bool, err error) {
+	values, err := ParseInt(binMap)
+	if err != nil {
+		return
+	}
+
+	for _, bit := range values {
+		if int64(bit) == bitValue {
+			isSet = true
+			return
+		}
+	}
+	return
+}
