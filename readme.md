@@ -10,4 +10,12 @@ import "github.com/audibleblink/bamflags"
 flags := int64(514)
 bamflags.ParseInt(flags)
 // => [ 512, 2 ]
+
+bam := 514
+bamflags.Contains(bam, int64(2))
+// => true
+
+bam := 520
+bamflags.Contains(bam, int64(2))
+// => false
 ```
