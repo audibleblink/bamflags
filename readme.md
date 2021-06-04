@@ -1,4 +1,4 @@
-# Binary Allocation Map Flags
+# Binary Alignment Map Flags
 
 This library will take a BAM as an integer and spit out the values of which the BAM is comprised.
 
