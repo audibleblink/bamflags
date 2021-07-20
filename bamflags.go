@@ -18,11 +18,15 @@ func ParseInt(bamInt int64) (opts []int, err error) {
 	binary := fmt.Sprintf("%b", bamInt)
 	splitBin := strings.Split(binary, "")
 
-	for idx, bit := range splitBin {
+	// Start from the end (least significant bits), so the
+	// resulting slice is in ascending bit order
+	for idx := len(splitBin) - 1; idx >= 0; idx-- {
+		bit := splitBin[idx]
 		if bit == on {
-			sig := len(splitBin) - idx
-			opts = append(opts, Significance(sig))
+			column := len(splitBin) - idx
+			opts = append(opts, Significance(column))
 		}
+
 	}
 	return
 }
@@ -34,23 +38,12 @@ func ParseInt(bamInt int64) (opts []int, err error) {
 // | binary #     | 1 | 0 | 0 | 1 |
 func Significance(column int) int {
 	num := float64(column)
-	out := math.Exp2(num - 1)
+	out := math.Exp2(num - 1) // 2 ^ column
 	return int(out)
 }
 
 // Contains will tell the caller whether or not a certain flag
 // within the provided Binary Access Map is set
-func Contains(binMap, bitValue int64) (isSet bool, err error) {
-	values, err := ParseInt(binMap)
-	if err != nil {
-		return
-	}
-
-	for _, bit := range values {
-		if int64(bit) == bitValue {
-			isSet = true
-			return
-		}
-	}
-	return
+func Contains(binMap, bitValue int64) (isSet bool) {
+	return binMap&bitValue != 0
 }
