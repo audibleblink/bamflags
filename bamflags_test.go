@@ -8,7 +8,7 @@ import (
 
 func TestParseInt(t *testing.T) {
 	input := int64(515)
-	expect := []int{512, 2, 1}
+	expect := []int{1, 2, 512}
 	got, err := ParseInt(input)
 
 	assert.Equal(t, expect, got)
@@ -29,15 +29,13 @@ func TestSignificance(t *testing.T) {
 func TestContains(t *testing.T) {
 	input := int64(514)
 	expect := true
-	got, err := Contains(input, int64(2))
+	got := Contains(input, int64(2))
 
 	assert.Equal(t, expect, got)
-	assert.Nil(t, err)
 
 	input = int64(520)
 	expect = false
-	got, err = Contains(input, int64(2))
+	got = Contains(input, int64(2))
 
 	assert.Equal(t, expect, got)
-	assert.Nil(t, err)
 }
